@@ -1,0 +1,348 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Hello World</title>
+</head>
+<style>
+  @font-face {
+    font-family: 'title';
+    font-weight: bold;
+    src: url("BEBASNEUE.otf") format("opentype");
+  }
+  html, body {
+    font-family: 'title', Fallback, sans-serif;
+    margin:0px;
+    height:100%;
+    width:100%;
+    background-color: black;
+  }
+  
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/4.5.1/pixi.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.0.5/howler.min.js"></script>
+<body>
+<div id="playground" style="margin-left: 50px; margin-top: 100px"></div>
+</body>
+<script src="js/classes/Element.js"></script>
+<script src="js/classes/Graphic.js"></script>
+<script src="js/classes/GraphicRec.js"></script>
+<script src="js/classes/Circle.js"></script>
+<script src="js/classes/Text.js"></script>
+<script type="text/javascript">
+  
+  var sound = new Howl({
+    src: ['assets/sound/all-edit1.wav']
+  });
+  var app = new PIXI.Application(1280, 720);
+
+  function soundSetup() {
+    var sound = new Howl({
+      src: ['assets/sound/all-edit1.wav']
+    });
+    sound.once('load', function(){
+      sound.play();
+      onAssetsLoaded()
+    });
+  }
+  app.renderer.view.style.position = "absolute";
+  app.renderer.view.style.display = "block";
+  app.renderer.autoResize = true;
+  app.renderer.backgroundColor = 0x8FAADC
+  document.getElementById('playground').appendChild(app.renderer.view);
+  app.stop()
+  PIXI.loader
+    .add('pic1', 'assets/scene3/1.png')
+    .add('pic2', 'assets/scene3/2.png')
+    .add('pic3', 'assets/scene3/3.png')
+    .add('comLogo', 'assets/scene5/logo-cpe.png')
+    .add('timeline', 'assets/scene5/timeline.png')
+    .load(onAssetsLoaded);
+  let scrollingValue = 0;
+
+let stage = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+
+function end(output, stageNumber) {
+  if(output) stage[stageNumber] += 1
+}
+
+function onAssetsLoaded(loader, resources)
+{
+  const pic1 = new Element({
+    name: 'pic1',
+    scale: 0.5
+  })
+  pic1.setPos({
+    x: 337,
+    y: 190
+  })
+  const pic2 = new Element({
+    name: 'pic2',
+    scale: 0.5
+  })
+  pic2.setPos({
+    x: 2000,
+    y: 190
+  })
+
+  const pic3 = new Element({
+    name: 'pic3',
+    scale: 0.5
+  })
+  pic3.setPos({
+    x: 2000,
+    y: 190
+  })
+
+  const comLogo = new Element({
+    name: 'comLogo',
+    scale: 0.5
+  })
+  comLogo.setPos({
+    x: 640,
+    y: 50
+  })
+  comLogo.setOpacity({})
+
+  const num1 = new Text({
+    size: 40,
+    fontName: 'title',
+    color: '#FFFFFF',
+    text: '4'
+  })
+
+  const circle1 = new Graphic({
+    width: 50,
+    height: 50,
+    posX: 760,
+    posY: 380,
+    color: 0x202020,
+    radius: 50
+  })
+  const circle2_2 = new Graphic({
+    width: 50,
+    height: 50,
+    posX: 640,
+    posY: 220,
+    color: 0x606060,
+    radius: 210
+  })
+
+  const circle2 = new Graphic({
+    width: 50,
+    height: 50,
+    posX: 640,
+    posY: 220,
+    color: 0x202020,
+    radius: 180
+  })
+  const circle1_2 = new Graphic({
+    width: 50,
+    height: 50,
+    posX: 760,
+    posY: 380,
+    color: 0xAAAAAA,
+    radius: 60
+  })
+
+  num1.setOpacity({ value: 1})
+  num1.setAnchor({ x: 0.5, y: 0.5 })
+  num1.setPos({ x: 760, y : 380 })
+
+  const endCircle = new Graphic({
+    posX: 337,
+    posY: 1500,
+    color: 0xF4B183,
+    radius: 500
+  })
+
+  const endCircle2 = new Graphic({
+    posX: 953,
+    posY: 1500,
+    color: 0xF34D56,
+    radius: 300
+  })
+
+  const backgroundContainer = new PIXI.Container()
+  const coverContainer = new PIXI.Container()
+  const elementContainer = new PIXI.Container()
+  const frontEffectContainer = new PIXI.Container()
+  const behideEffectContainer = new PIXI.Container()
+  const frontContainer = new PIXI.Container()
+  
+  app.stage.addChild(backgroundContainer)
+  app.stage.addChild(behideEffectContainer)
+  app.stage.addChild(elementContainer)
+  app.stage.addChild(frontEffectContainer)
+  app.stage.addChild(coverContainer)
+  app.stage.addChild(frontContainer)
+  
+  
+  var deltaTimes = 0
+  app.ticker.speed = 0.015
+
+  app.ticker.add(function(delta) {
+    
+    deltaTimes += delta
+
+    if(deltaTimes >= 0.7) {
+      switch(stage[1]) {
+        case 1:
+          elementContainer.addChild(pic1.Sprite)
+          end(pic1.moveToX({
+            endPos: { x: 640, y: 220 },
+            speed: 9,
+          }), 1)
+          break
+      }
+    }
+
+    if(deltaTimes >= 2.7) {
+      switch(stage[1]) {
+        case 2:
+          end(pic1.moveToX({
+            endPos: { x: 337, y: 300 },
+            speed: 15,
+          }), 1)
+          break
+        case 3:
+          pic1.moveToX({
+            endPos: { x: 437, y: 500 },
+            speed: 10,
+          })
+          break
+          
+      }
+    }
+    if(deltaTimes >= 2.6) {
+      switch(stage[4]) {
+        case 1:
+        end(pic1.fadeOut({
+          alpha: 0.2
+        }), 4)
+        break
+      }
+      switch(stage[2]) {
+        case 1:
+         elementContainer.addChild(pic2.Sprite)
+         end(pic2.moveToX({
+            endPos: { x: 640, y: 500 },
+            speed: 100,
+          }), 2)
+          break
+      }
+    }
+
+    if(deltaTimes >= 6.7) {
+      switch(stage[4]) {
+        case 2:
+        end(pic2.fadeOut({
+          alpha: 0.2
+        }), 4)
+        break
+      }
+      switch(stage[3]) {
+        case 1:
+         elementContainer.addChild(pic3.Sprite)
+         end(pic3.moveToX({
+            endPos: { x: 949, y: 500 },
+            speed: 100,
+          }), 3)
+          break
+      }
+    }
+
+    if(deltaTimes >= 9.5) {
+      switch(stage[5]) {
+        case 1:
+        pic1.fadeIn({
+          alppha: 1
+        })
+        end(pic2.fadeIn({
+          alppha: 1
+        }), 5)
+        break
+      }
+    }
+
+    if(deltaTimes >= 10.3) {
+      switch(stage[6]) {
+        case 1:
+          elementContainer.y -= 5
+          if(elementContainer.y <= -150) {
+            stage[6] += 1
+          }
+          break
+      }
+      coverContainer.addChild(endCircle.Sprite)
+      coverContainer.addChild(endCircle2.Sprite)
+      switch(stage[7]) {
+        case 1:
+          endCircle.moveToY({
+            endPos: { x: 640, y: 350 },
+            speed: 50,
+          })
+          break
+      }
+    }
+    if(deltaTimes >= 11.3) {
+      switch(stage[8]) {
+        case 1:
+          endCircle2.moveToY({
+            endPos: { x: 640, y: 350 },
+            speed: 50,
+          })
+          break
+      }
+    }
+
+    if(deltaTimes >= 17.3) {
+      switch(stage[9]) {
+        case 1:
+          end(endCircle2.popInCircle({
+            endScale: 2,
+            speed: 0.13
+          }), 9)
+          break
+      }
+    }
+
+    if(deltaTimes >= 20.8) {
+      frontContainer.addChild(circle2_2.Sprite)
+      frontContainer.addChild(circle2.Sprite)
+      frontContainer.addChild(comLogo.Sprite)
+      circle2_2.zoomPulse({
+        scale: 1.2,
+        pulse: 2
+      })
+      comLogo.fadeIn({})
+    }
+
+    if(deltaTimes >= 21.5) {
+      frontContainer.addChild(circle1_2.Sprite)
+      frontContainer.addChild(circle1.Sprite)
+      frontContainer.addChild(num1.Text)
+        circle1_2.zoomPulse({
+          scale: 1.5,
+          pulse: 3
+        })
+        num1.fadeIn({})
+    }
+
+    if (deltaTimes >= 23.5) {
+      endCircle2.popInCircle({
+        endScale: 100,
+        speed: 0.5
+      })
+      frontContainer.alpha -= 0.05
+    }
+
+  })
+  app.start()
+  
+  
+}
+
+</script>
+</html>

@@ -1,0 +1,493 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Hello World</title>
+</head>
+<style>
+  @font-face {
+    font-family: 'title';
+    font-weight: bold;
+    src: url("BEBASNEUE.otf") format("opentype");
+  }
+  html, body {
+    font-family: 'title', Fallback, sans-serif;
+    margin:0px;
+    height:100%;
+    width:100%;
+    background-color: black;
+  }
+  
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/4.5.1/pixi.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.0.5/howler.min.js"></script>
+<body>
+<div id="playground" style="margin-left: 50px; margin-top: 100px"></div>
+</body>
+<script src="js/classes/Element.js"></script>
+<script src="js/classes/Graphic.js"></script>
+<script src="js/classes/GraphicRec.js"></script>
+<script src="js/classes/Circle.js"></script>
+<script src="js/classes/Text.js"></script>
+<script type="text/javascript">
+  
+  var sound = new Howl({
+    src: ['assets/sound/all-edit1.wav']
+  });
+  var app = new PIXI.Application(1280, 720);
+
+  function soundSetup() {
+    var sound = new Howl({
+      src: ['assets/sound/all-edit1.wav']
+    });
+    sound.once('load', function(){
+      sound.play();
+      onAssetsLoaded()
+    });
+  }
+  app.renderer.view.style.position = "absolute";
+  app.renderer.view.style.display = "block";
+  app.renderer.autoResize = true;
+  app.renderer.backgroundColor = 0xDDDEE0
+  document.getElementById('playground').appendChild(app.renderer.view);
+  app.stop()
+  PIXI.loader
+    .add('graduate', 'assets/scene2/graduate.png')
+    .add('korean_1', 'assets/scene2/korean_1.png')
+    .add('korean_2', 'assets/scene2/korean_2.png')
+    .add('korean_3', 'assets/scene2/korean_3.png')
+    .add('timeline', 'assets/scene2/timeline.png')
+    .add('calendar', 'assets/scene2/2018.jpg')
+    .load(onAssetsLoaded);
+  let scrollingValue = 0;
+
+let stage = [1,1,1,1,1,1,1,1,1,1]
+
+function end(output, stageNumber) {
+  if(output) stage[stageNumber] += 1
+}
+
+function onAssetsLoaded(loader, resources)
+{
+  const graduate = new Element({
+    name: 'graduate',
+    scale: 1
+  })
+  graduate.setPos({
+    x: 337,
+    y: 1000
+  })
+  const korean_1 = new Element({
+    name: 'korean_1',
+    scale: 0.5
+  })
+  korean_1.setPos({
+    x: 640,
+    y: 1000
+  })
+  const korean_2 = new Element({
+    name: 'korean_2',
+    scale: 0.8
+  })
+  korean_2.setPos({
+    x: 640,
+    y: 1000
+  })
+  const korean_3 = new Element({
+    name: 'korean_3',
+    scale: 0.5
+  })
+  korean_3.setPos({
+    x: 640,
+    y: 1000
+  })
+
+  const timeline = new Element({
+    name: 'timeline',
+    scale: 0.75
+  })
+  timeline.setPos({
+    x: 953,
+    y: 1000
+  })
+
+  const calendar = new Element({
+    name: 'calendar',
+    scale: 0.3
+  })
+  calendar.setPos({
+    x: 953,
+    y: 1000
+  })
+
+  const num1 = new Text({
+    size: 40,
+    fontName: 'title',
+    color: '#FFFFFF',
+    text: '1'
+  })
+
+  const circle1 = new Graphic({
+    width: 50,
+    height: 50,
+    posX: 317,
+    posY: 120,
+    color: 0x202020,
+    radius: 50
+  })
+  const circle1_2 = new Graphic({
+    width: 50,
+    height: 50,
+    posX: 317,
+    posY: 120,
+    color: 0x808080,
+    radius: 60
+  })
+
+  num1.setOpacity({ value: 1})
+  num1.setAnchor({ x: 0.5, y: 0.5 })
+  num1.setPos({ x: 317, y : 120 })
+
+  const num2 = new Text({
+    size: 40,
+    fontName: 'title',
+    color: '#FFFFFF',
+    text: '2'
+  })
+
+  const circle2 = new Graphic({
+    width: 50,
+    height: 50,
+    posX: 640,
+    posY: 120,
+    color: 0x1E2849,
+    radius: 50
+  })
+  const circle2_2 = new Graphic({
+    width: 50,
+    height: 50,
+    posX: 640,
+    posY: 120,
+    color: 0x8190B1,
+    radius: 60
+  })
+
+  num2.setOpacity({ value: 1})
+  num2.setAnchor({ x: 0.5, y: 0.5 })
+  num2.setPos({ x: 640, y : 120 })
+
+  const num3 = new Text({
+    size: 40,
+    fontName: 'title',
+    color: '#FFFFFF',
+    text: '3'
+  })
+
+  const circle3 = new Graphic({
+    width: 50,
+    height: 50,
+    posX: 953,
+    posY: 120,
+    color: 0x01A184,
+    radius: 50
+  })
+  const circle3_2 = new Graphic({
+    width: 50,
+    height: 50,
+    posX: 953,
+    posY: 120,
+    color: 0x30BF96,
+    radius: 60
+  })
+
+  num3.setOpacity({ value: 1})
+  num3.setAnchor({ x: 0.5, y: 0.5 })
+  num3.setPos({ x: 953, y : 120 })
+  
+  const introRec = new GraphicRec({
+    width: 2000,
+    height: 500,
+    posX: 640,
+    posY: 1000,
+    color: 0xAAADD0,
+    radius: 60
+  })
+
+  const endCircle = new Graphic({
+    posX: 200,
+    posY: 1300,
+    color: 0x7EBBCB,
+    radius: 500
+  })
+
+  const endCircle2 = new Graphic({
+    posX: 1080,
+    posY: 1300,
+    color: 0x8FAADC,
+    radius: 300
+  })
+
+  const backgroundContainer = new PIXI.Container()
+  const coverContainer = new PIXI.Container()
+  const elementContainer = new PIXI.Container()
+  const frontEffectContainer = new PIXI.Container()
+  const behideEffectContainer = new PIXI.Container()
+  
+  app.stage.addChild(backgroundContainer)
+  app.stage.addChild(behideEffectContainer)
+  app.stage.addChild(elementContainer)
+  app.stage.addChild(frontEffectContainer)
+  app.stage.addChild(coverContainer)
+  
+  
+  var deltaTimes = 0
+  app.ticker.speed = 0.015
+
+  app.ticker.add(function(delta) {
+    
+    deltaTimes += delta
+    if(deltaTimes >= 4.5) {
+      backgroundContainer.addChild(introRec.Sprite)
+      introRec.moveToY({
+        endPos: { x: 400, y: 800 },
+        speed: 9,
+      })
+    }
+    if(deltaTimes >= 5.8) {
+      behideEffectContainer.addChild(circle1_2.Sprite)
+      behideEffectContainer.addChild(circle1.Sprite)
+      elementContainer.addChild(num1.Text)
+      circle1_2.zoomPulse({
+        scale: 1.5,
+        pulse: 8
+      })
+      switch(stage[1]) {
+        case 1:
+          elementContainer.addChild(graduate.Sprite)
+          end(graduate.moveToY({
+              endPos: { x: 337, y: 260 },
+              speed: 50,
+            }), 1)
+          break
+        case 2:
+          end(graduate.moveToY({
+              endPos: { x: 337, y: 200 },
+              speed: 15,
+            }), 1)
+          break
+        case 3:
+          end(graduate.moveToY({
+              endPos: { x: 337, y: 260 },
+              speed: 5,
+            }), 1)
+          break
+        // circle2.setOpacity({ value: 1 })
+      } 
+    }
+
+    if(deltaTimes >= 10.8) {
+      behideEffectContainer.addChild(circle2_2.Sprite)
+      behideEffectContainer.addChild(circle2.Sprite)
+      elementContainer.addChild(num2.Text)
+      circle2_2.zoomPulse({
+        scale: 1.5,
+        pulse: 5
+      })
+      switch(stage[2]) {
+        case 1:
+          elementContainer.addChild(korean_3.Sprite)
+          elementContainer.addChild(korean_2.Sprite)
+          elementContainer.addChild(korean_1.Sprite)
+          end(korean_1.moveToY({
+              endPos: { x: 640, y: 350 },
+              speed: 50,
+            }), 2)
+          break
+        case 2:
+          end(korean_1.moveToY({
+              endPos: { x: 640, y: 290 },
+              speed: 15,
+            }), 2)
+          break
+        case 3:
+          end(korean_1.moveToY({
+              endPos: { x: 640, y: 350 },
+              speed: 5,
+            }), 2)
+          break
+        // circle2.setOpacity({ value: 1 })
+      } 
+    }
+
+    if(deltaTimes >= 11.3) {
+      switch(stage[4]) {
+        case 1:
+          end(korean_2.moveToY({
+              endPos: { x: 640, y: 280 },
+              speed: 50,
+            }), 4)
+          break
+        case 2:
+          end(korean_2.moveToY({
+              endPos: { x: 640, y: 220 },
+              speed: 15,
+            }), 4)
+          break
+        case 3:
+          end(korean_2.moveToY({
+              endPos: { x: 640, y: 280 },
+              speed: 5,
+            }), 4)
+          break
+        // circle2.setOpacity({ value: 1 })
+      } 
+    }
+
+    if(deltaTimes >= 11.8) {
+      switch(stage[5]) {
+        case 1:
+          end(korean_3.moveToY({
+              endPos: { x: 640, y: 220 },
+              speed: 50,
+            }), 5)
+          break
+        case 2:
+          end(korean_3.moveToY({
+              endPos: { x: 640, y: 180 },
+              speed: 15,
+            }), 5)
+          break
+        case 3:
+          end(korean_3.moveToY({
+              endPos: { x: 640, y: 220 },
+              speed: 5,
+            }), 5)
+          break
+      } 
+    }
+
+    if(deltaTimes >= 14) {
+      behideEffectContainer.addChild(circle3_2.Sprite)
+      behideEffectContainer.addChild(circle3.Sprite)
+      elementContainer.addChild(num3.Text)
+      circle3_2.zoomPulse({
+        scale: 1.5,
+        pulse: 4
+      })
+      switch(stage[3]) {
+        case 1:
+          elementContainer.addChild(timeline.Sprite)
+          end(timeline.moveToY({
+              endPos: { x: 953, y: 160 },
+              speed: 50,
+            }), 3)
+          break
+        case 2:
+          end(timeline.moveToY({
+              endPos: { x: 953, y: 100 },
+              speed: 15,
+            }), 3)
+          break
+        case 3:
+          end(timeline.moveToY({
+              endPos: { x: 953, y: 160 },
+              speed: 5,
+            }), 3)
+          break
+      } 
+    }
+
+    if(deltaTimes >= 14.5) {
+      switch(stage[6]) {
+        case 1:
+          elementContainer.addChild(calendar.Sprite)
+          end(calendar.moveToY({
+              endPos: { x: 953, y: 360 },
+              speed: 50,
+            }), 6)
+          break
+        case 2:
+          end(calendar.moveToY({
+              endPos: { x: 953, y: 300 },
+              speed: 15,
+            }), 6)
+          break
+        case 3:
+          end(calendar.moveToY({
+              endPos: { x: 953, y: 360 },
+              speed: 5,
+            }), 6)
+          break
+      } 
+    }
+
+    if(deltaTimes >= 17) {
+      behideEffectContainer.y -= 20
+      elementContainer.y -= 20
+      switch(stage[7]) {
+        case 1:
+          coverContainer.addChild(endCircle.Sprite)
+          end(endCircle.moveToY({
+              endPos: { x: 953, y: 360 },
+              speed: 50,
+            }), 7)
+          break
+        case 2:
+          end(endCircle.moveToY({
+              endPos: { x: 953, y: 300 },
+              speed: 15,
+            }), 7)
+          break
+        case 3:
+          end(endCircle.moveToY({
+              endPos: { x: 953, y: 360 },
+              speed: 5,
+            }), 7 )
+          break
+      } 
+    }
+    if(deltaTimes >= 18.5) {
+      switch(stage[8]) {
+        case 1:
+          coverContainer.addChild(endCircle2.Sprite)
+          end(endCircle2.moveToY({
+              endPos: { x: 200, y: 360 },
+              speed: 50,
+            }), 8)
+          break
+        case 2:
+          end(endCircle2.moveToY({
+              endPos: { x: 200, y: 300 },
+              speed: 15,
+            }), 8)
+          break
+        case 3:
+          end(endCircle2.moveToY({
+              endPos: { x: 200, y: 360 },
+              speed: 5,
+            }), 8)
+          break
+      } 
+    }
+
+    if(deltaTimes >= 19.7) {
+      switch(stage[9]) {
+        case 1:
+          coverContainer.addChild(endCircle2.Sprite)
+          end(endCircle2.popInCircle({
+            endScale: 5,
+            speed: 0.095
+          }), 9)
+          break
+      } 
+    }
+
+  })
+  app.start()
+  
+  
+}
+
+</script>
+</html>

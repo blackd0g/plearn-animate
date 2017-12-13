@@ -1,0 +1,241 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Hello World</title>
+</head>
+<style>
+  @font-face {
+    font-family: 'title';
+    font-weight: bold;
+    src: url("BEBASNEUE.otf") format("opentype");
+  }
+  html, body {
+    font-family: 'title', Fallback, sans-serif;
+    margin:0px;
+    height:100%;
+    width:100%;
+    background-color: black;
+  }
+  
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/4.5.1/pixi.min.js"></script>
+<body>
+<div id="playground" style="margin-left: 300px; margin-top: 100px"></div>
+</body>
+<script src="js/classes/Element.js"></script>
+<script src="js/classes/Graphic.js"></script>
+<script src="js/classes/Circle.js"></script>
+<script src="js/classes/Text.js"></script>
+<script type="text/javascript">
+  
+
+  var app = new PIXI.Application(1280, 720);
+  app.renderer.view.style.position = "absolute";
+  app.renderer.view.style.display = "block";
+  app.renderer.autoResize = true;
+  app.renderer.backgroundColor = 0xffffff
+  document.getElementById('playground').appendChild(app.renderer.view);
+  app.stop()
+  PIXI.loader
+    .add('computer', 'assets/flat-computer.png')
+    .load(onAssetsLoaded);
+  let scrollingValue = 0;
+
+let stage = [1,1,1,1,1]
+
+function end(output, stageNumber) {
+  if(output) stage[stageNumber] += 1
+}
+
+function onAssetsLoaded(loader, resources)
+{
+  const computer = new Element({
+    name: 'computer',
+    scale: 0.5
+  })
+  const computer2 = new Element({
+    name: 'computer',
+    scale: 0.5
+  })
+
+  const computer3 = new Element({
+    name: 'computer',
+    scale: 0.5
+  })
+
+  const circle = new Graphic({
+    width: 50,
+    height: 50,
+    posX: 100,
+    posY: 100,
+    color: 0xF5F4F5
+  })
+
+  const circle2 = new Graphic({
+    width: 50,
+    height: 50,
+    posX: 100,
+    posY: 100,
+    color: 0x94ACBB
+  })
+
+  const Title = new Text({
+    size: 70,
+    fontName: 'title',
+    color: '#FFFFFF'
+  })
+
+  Title.setOpacity({})
+  
+  const backgroundContainer = new PIXI.Container()
+  const coverContainer = new PIXI.Container()
+  const elementContainer = new PIXI.Container()
+  const frontEffectContainer = new PIXI.Container()
+  const behideEffectContainer = new PIXI.Container()
+  
+  app.stage.addChild(backgroundContainer)
+  app.stage.addChild(behideEffectContainer)
+  app.stage.addChild(elementContainer)
+  app.stage.addChild(frontEffectContainer)
+  app.stage.addChild(coverContainer)
+  
+  elementContainer.addChild(computer.Sprite)
+  elementContainer.addChild(computer3.Sprite)
+  elementContainer.addChild(computer2.Sprite)
+  backgroundContainer.addChild(circle.Sprite)
+  // app.stage.addChild(circle2.Graphic)
+
+  var deltaTimes = 0
+  app.ticker.speed = 0.015
+  computer.setOpacity({ value: 0 })
+  computer2.setAnchor({ x: 0.5, y: 0.5})
+  computer2.setPos({ x: -100, y: -100})
+  
+  computer3.setOpacity({ value: 0 })
+  computer3.setAnchor({ x: 0.6, y: 0.5})
+  computer3.setPos({ x: 500, y: 300})
+  circle.setOpacity({})
+  app.ticker.add(function(delta) {
+    
+    deltaTimes += delta
+    if(deltaTimes >= 3.5) {
+      switch(stage[0]) {
+        case 1:
+          end(computer.setPos({ x :100, y: 0 }), 0)
+          break
+        case 2:
+          computer.fadeIn({})
+          end(computer.leftToright({
+            startPos: { x: 0, y: 0 },
+            endPos: { x: 1000, y: 100 },
+            speed: 20,
+            slowFactor: 2,
+            slowPos: 5,
+          }), 0)
+          break
+        case 3:
+          end(computer2.setPos({ x :0, y: 500 }), 0)
+          break
+        case 4:
+          end(computer2.leftToright({
+            startPos: { x: 0, y: 0 },
+            endPos: { x: 1000, y: 100 },
+            speed: 30,
+            slowFactor: 2,
+            slowPos: 8,
+          }), 0)
+          break
+        case 5:
+          end(computer2.zoomIn({
+            speed: 0.02,
+            scale: 1.5
+          }), 0)
+          break
+        case 6:
+          end(computer2.zoomPulse({
+            speed: 0.02,
+            startScale: 1,
+            scale: 1.2
+          }), 0)
+          break
+        case 7:
+          end(computer2.fadeOut({}), 0)
+          break
+        case 8:
+          computer2.setPos({ x :500, y: 100 })
+          computer2.setScale({ scale: 0.5 })
+          end(computer2.fadeIn({}), 0)
+          break
+      }
+    }
+
+    if(deltaTimes >= 5.25) {
+      switch(stage[1]) {
+        case 1:
+          computer3.fadeIn({})
+          end(computer3.zoomPulse({
+            pulse: 1,
+            speed: 0.009,
+            scale: 0.7,
+            startScale: 0.5
+          }), 1)
+          break
+        case 2: 
+          end(computer3.fadeOut({}), 1)
+          break
+        case 3:
+          end(computer.setAnchor({ x: 0.5, y: 0.5 }), 1)
+          break
+        case 4:
+          end(computer.rotate({}), 1)
+          break
+      }
+    }
+
+    if(deltaTimes >= 1.25) {
+      switch(stage[2]) {
+        case 1:
+        circle.setOpacity({ value: 1 })
+        end(circle.popInCircle({
+          endRadius: 10,
+          speed: 0.1
+        }), 2)
+        break
+        /*
+        // case 2:
+        //   end(circle2.moveToAny({
+        //     endPos: {
+        //       x: 500,
+        //       y: 50,
+        //     },
+        //     speed: 20
+        //   }), 2)
+        //   break
+        // case 3:
+        //   end(circle.popAround({
+        //     center: 100,
+        //     endRadius: 20,
+        //     speed: 5,
+        //     time: 100
+        //   }), 2)
+        //   break
+        */
+          
+      }
+    }
+
+    if(deltaTimes >= 3.25) {
+      elementContainer.addChild(Title.Text)
+      Title.fadeIn({})
+    }
+
+  })
+  app.start()
+  
+  
+}
+
+</script>
+</html>
