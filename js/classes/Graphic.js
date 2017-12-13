@@ -73,10 +73,12 @@ class Graphic{
     const dy = endPos.y - this.Sprite.y
     const angle = Math.atan2(dy, dx)
     const xVelo = Math.cos(angle) * speed
-    if( parseInt(xVelo) <= 0 && this.Sprite.x + xVelo <= endPos.x ) {
+    if( parseInt(xVelo) <= 0 && parseInt(this.Sprite.x) + parseInt(xVelo)  <= endPos.x ) {
       this.Sprite.x = endPos.x
+      console.log("dddd")
       return true
     }  else {
+      console.log(parseInt(xVelo),this.Sprite.x  )
       // this.Sprite.x += xVelo
       this.Sprite.x += xVelo
     }

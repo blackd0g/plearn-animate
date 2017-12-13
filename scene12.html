@@ -1,0 +1,198 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Hello World</title>
+</head>
+<style>
+  @font-face {
+    font-family: 'title';
+    font-weight: bold;
+    src: url("BEBASNEUE.otf") format("opentype");
+  }
+  html, body {
+    font-family: 'title', Fallback, sans-serif;
+    margin:0px;
+    height:100%;
+    width:100%;
+    background-color: black;
+  }
+  
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/4.5.1/pixi.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.0.5/howler.min.js"></script>
+<body>
+<div id="playground" style="margin-left: 50px; margin-top: 100px"></div>
+</body>
+<script src="js/classes/Element.js"></script>
+<script src="js/classes/Graphic.js"></script>
+<script src="js/classes/GraphicRec.js"></script>
+<script src="js/classes/Circle.js"></script>
+<script src="js/classes/Text.js"></script>
+<script type="text/javascript">
+  
+  
+  var app = new PIXI.Application(1280, 720);
+
+  function soundSetup() {
+    var sound = new Howl({
+      src: ['assets/sound/all-edit1.wav']
+    });
+    sound.once('load', function(){
+      sound.play();
+      onAssetsLoaded()
+    });
+  }
+  app.renderer.view.style.position = "absolute";
+  app.renderer.view.style.display = "block";
+  app.renderer.autoResize = true;
+  app.renderer.backgroundColor = 0x4F567E
+  document.getElementById('playground').appendChild(app.renderer.view);
+  app.stop()
+  PIXI.loader
+    .add('write', 'assets/scene12/write.png')
+    .add('active', 'assets/scene12/active.png')
+    .add('reading', 'assets/scene12/reading.png')
+    .add('guitar', 'assets/scene12/guitar.png')
+    .add('reception', 'assets/scene12/reception.png')
+    .add('trophy', 'assets/scene12/trophy.png')
+    .load(onAssetsLoaded);
+  let scrollingValue = 0;
+
+let stage = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+
+function end(output, stageNumber) {
+  if(output) stage[stageNumber] += 1
+}
+
+function onAssetsLoaded(loader, resources)
+{
+  const num2 = new Text({
+    size: 70,
+    fontName: 'title',
+    color: '#FFFFFF',
+    text: '2nd round'
+  })
+
+  const num1 = new Text({
+    size: 140,
+    fontName: 'title',
+    color: '#FFFFFF',
+    text: 'Quota'
+  })
+  const circle = new Graphic({
+    posX: 0,
+    posY: 100,
+    color: 0x684C40,
+    radius: 5000
+  })
+  const right = new GraphicRec({
+    width: 500,
+    height: 720,
+    posX: 2000,
+    posY: 360,
+    color: 0xFFD866
+  })
+  const coverright = new GraphicRec({
+    width: 1280,
+    height: 720,
+    posX: 1280,
+    posY: 360,
+    color: 0xFFD866
+  })
+  const write = new Element({
+    name: 'write',
+    scale: 1
+  })
+  write.setPos({
+    x: 337,
+    y: 90
+  })
+  const active = new Element({
+    name: 'active',
+    scale: 1
+  })
+  active.setPos({
+    x: 0,
+    y: 290
+  })
+  const reading = new Element({
+    name: 'reading',
+    scale: 1
+  })
+  reading.setPos({
+    x: 2000,
+    y: 290
+  })
+  
+  circle.Sprite.scale.set(0.01,0.01)
+  num1.setPos({ x: 515, y : 330 })
+  num1.setOpacity({ opacity:0 })
+  num2.setPos({ x: 530, y : 230 })
+  num2.setOpacity({ opacity:0 })
+
+  const backgroundContainer = new PIXI.Container()
+  const coverContainer = new PIXI.Container()
+  const elementContainer = new PIXI.Container()
+  const frontEffectContainer = new PIXI.Container()
+  const behideEffectContainer = new PIXI.Container()
+  const frontContainer = new PIXI.Container()
+  
+  app.stage.addChild(backgroundContainer)
+  app.stage.addChild(behideEffectContainer)
+  app.stage.addChild(elementContainer)
+  app.stage.addChild(frontEffectContainer)
+  app.stage.addChild(coverContainer)
+  app.stage.addChild(frontContainer)
+  
+  
+  var deltaTimes = 0
+  app.ticker.speed = 0.015
+
+  app.ticker.add(function(delta) {
+    
+    deltaTimes += delta
+
+
+    if(deltaTimes >= 0.95) {
+      switch(stage[1]) {
+        case 1:
+        frontContainer.addChild(num2.Text)
+          end(num2.fadeIn({
+            alpha: 1,
+            speed: 0.08
+          }), 1)
+          break
+      }
+    }
+
+    if(deltaTimes >= 1.65) {
+      switch(stage[1]) {
+        case 2:
+        frontContainer.addChild(num1.Text)
+          end(num1.fadeIn({
+            alpha: 1,
+            speed: 0.08
+          }), 1)
+          break
+      }
+    }
+    if(deltaTimes >= 2) {
+        backgroundContainer.addChild(circle.Sprite)
+          end(num1.fadeIn({
+            alpha: 1,
+            speed: 0.08
+          }), 1)
+      }
+    
+   
+    
+  })
+  app.start()
+  
+  
+}
+
+</script>
+</html>
